@@ -5,7 +5,8 @@
 	"main": "app.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "concurrently -k -n \"typescript, server\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/app.js\""
+		"dev": "concurrently -k -n \"typescript, server\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/app.js\"",
+		"start": "node dist/app.js"
 	},
 	"keywords": [],
 	"author": "",
