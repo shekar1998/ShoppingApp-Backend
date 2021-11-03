@@ -28,8 +28,9 @@ const startServer = () => {
     .then(() => {
       console.log('Connected to database');
 
-      app.listen(process.env.PORT, () => {
-        console.log(`Server Running at http://localhost:${process.env.PORT}`);
+      let server = app.listen(process.env.PORT || 4000, () => {
+        let port: any = server.address();
+        console.log(`Server Running at ${port.port}`);
       });
     })
     .catch((err: any) => {

@@ -26,8 +26,9 @@ var startServer = function () {
     (0, connection_to_db_1.default)()
         .then(function () {
         console.log('Connected to database');
-        app.listen(process.env.PORT, function () {
-            console.log("Server Running at http://localhost:" + process.env.PORT);
+        var server = app.listen(process.env.PORT || 4000, function () {
+            var port = server.address();
+            console.log("Server Running at " + port.port);
         });
     })
         .catch(function (err) {
