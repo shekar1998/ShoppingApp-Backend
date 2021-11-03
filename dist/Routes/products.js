@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express = require('express');
+var router = express.Router();
+var products_1 = require("../Controller/products");
+router.get("/getProducts", products_1.GetProducts);
+router.get("/getProductsById/:id", products_1.GetProductsById);
+router.get("/getProductCount", products_1.GetProductCount);
+router.get("/getFeaturedProduct/:count", products_1.GetFeaturedProduct);
+router.post("/createProduct", products_1.uploadImage, products_1.CreateProducts);
+router.delete("/deleteProducts/:id", products_1.DeleteProducts);
+router.put("/updateProduct/:id", products_1.uploadImage, products_1.UpdateProduct);
+router.put("/updateProductImages/:id", products_1.uploadImageArray, products_1.UpdateProductImages);
+module.exports = router;
