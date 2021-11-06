@@ -75,7 +75,7 @@ var storage = multer_1.default.diskStorage({
         cb(null, fileName + "-" + Date.now() + "." + extension);
     },
 });
-var upload = (0, multer_1.default)({ storage: storage });
+var upload = multer_1.default({ storage: storage });
 exports.uploadImage = upload.single('image');
 exports.uploadImageArray = upload.array('images', 10);
 var GetProducts = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {

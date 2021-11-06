@@ -31,6 +31,10 @@ var userSchema = new mongoose_1.default.Schema({
         type: String,
         default: '',
     },
+    Image: {
+        type: String,
+        default: '',
+    },
     apartment: {
         type: String,
         default: '',

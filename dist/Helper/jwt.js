@@ -44,7 +44,7 @@ var express_jwt_1 = __importDefault(require("express-jwt"));
 function ExpressJwt() {
     var secret = process.env.SECRET_KEY;
     var api = process.env.API_URL;
-    return (0, express_jwt_1.default)({
+    return express_jwt_1.default({
         secret: secret,
         algorithms: ['HS256'],
         isRevoked: isRevoked

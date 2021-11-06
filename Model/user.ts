@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    Image: {
+      type: String,
+      default: '',
+    },
     apartment: {
       type: String,
       default: '',

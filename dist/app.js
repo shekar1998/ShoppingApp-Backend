@@ -16,14 +16,14 @@ var productsRoutes = require('./Routes/products');
 var usersRoutes = require('./Routes/users');
 var ordersRoutes = require('./Routes/orders');
 var startServer = function () {
-    var app = (0, express_1.default)();
+    var app = express_1.default();
     var api = process.env.API_URL;
     app.use(express_1.default.json());
-    app.use((0, cors_1.default)());
-    app.use((0, jwt_1.ExpressJwt)());
+    app.use(cors_1.default());
+    app.use(jwt_1.ExpressJwt());
     app.use(errorHandler_1.ErrorHandler);
     app.use('/public/Image', express_1.default.static(__dirname + '/public/Image'));
-    (0, connection_to_db_1.default)()
+    connection_to_db_1.default()
         .then(function () {
         console.log('Connected to database');
         var server = app.listen(process.env.PORT || 4000, function () {

@@ -50,7 +50,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateUsers = exports.DeleteUsers = exports.GetUserCount = exports.Login = exports.Register = exports.SignIn = exports.getUSers = void 0;
+exports.UpdateUsers = exports.DeleteUsers = exports.GetUserCount = exports.Login = exports.Register = exports.getUSersById = exports.getUSers = void 0;
 var user_1 = __importDefault(require("../Model/user"));
 var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -86,35 +86,19 @@ var getUSers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.getUSers = getUSers;
-var SignIn = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var userSignin, err_2;
+var getUSersById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                console.log(req.body.name);
-                return [4 /*yield*/, user_1.default.create({
-                        name: req.body.name,
-                        email: req.body.email,
-                        passwordHash: bcryptjs_1.default.hashSync(req.body.passwordHash, 10),
-                        phone: req.body.phone,
-                        isAdmin: req.body.isAdmin,
-                        street: req.body.street,
-                        zip: req.body.zip,
-                        city: req.body.city,
-                        country: req.body.country,
-                    })];
+                return [4 /*yield*/, user_1.default.findById(req.params.id).select('-passwordHash')];
             case 1:
-                userSignin = _a.sent();
-                if (!userSignin) {
-                    return [2 /*return*/, res.status(400).json({
-                            status: 'Cannot Create',
-                        })];
+                user = _a.sent();
+                if (!user) {
+                    res.status(500).json({ message: 'The user with the given ID was not found.' });
                 }
-                res.send(userSignin);
-                res.status(200).json({
-                    status: 'Successful',
-                });
+                res.status(200).send(user);
                 return [3 /*break*/, 3];
             case 2:
                 err_2 = _a.sent();
@@ -128,14 +112,14 @@ var SignIn = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); };
-exports.SignIn = SignIn;
+exports.getUSersById = getUSersById;
 var Register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var userSignin, err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                console.log(req.body.name);
+                console.log(req.body);
                 return [4 /*yield*/, user_1.default.create({
                         name: req.body.name,
                         email: req.body.email,
@@ -146,6 +130,7 @@ var Register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                         zip: req.body.zip,
                         city: req.body.city,
                         country: req.body.country,
+                        Image: req.body.Image
                     })];
             case 1:
                 userSignin = _a.sent();
@@ -178,6 +163,7 @@ var Login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
+                console.log(req.body);
                 return [4 /*yield*/, user_1.default.findOne({ email: req.body.email })];
             case 1:
                 user = _a.sent();
@@ -274,6 +260,8 @@ var UpdateUsers = function (req, res) { return __awaiter(void 0, void 0, void 0,
                             status: 'Invalid Id',
                         })];
                 }
+                console.log(req.params);
+                console.log(req.body);
                 return [4 /*yield*/, user_1.default.findByIdAndUpdate(req.params.id, __assign({}, req.body), { new: true })];
             case 1:
                 user = _a.sent();
