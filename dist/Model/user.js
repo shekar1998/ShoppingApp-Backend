@@ -27,6 +27,10 @@ var userSchema = new mongoose_1.default.Schema({
         type: Boolean,
         default: false,
     },
+    Seller: {
+        type: Boolean,
+        default: false,
+    },
     street: {
         type: String,
         default: '',
