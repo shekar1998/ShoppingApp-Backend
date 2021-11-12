@@ -8,6 +8,8 @@ dotenv.config();
 
 export const getUSers = async (req: any, res: any) => {
   try {
+    console.log("Entering Users");
+    
     const users: any = await User.find({});
     if (!users) {
       return res.status(400).json({

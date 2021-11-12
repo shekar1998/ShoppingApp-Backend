@@ -54,7 +54,6 @@ exports.UpdateProductImages = exports.UpdateProduct = exports.DeleteProducts = e
 var products_1 = __importDefault(require("../Model/products"));
 var mongoose_1 = __importDefault(require("mongoose"));
 var multer_1 = __importDefault(require("multer"));
-var mime_1 = __importDefault(require("mime"));
 var FILE_TYPE_MAP = {
     'image/png': 'png',
     'image/jpeg': 'jpeg',
@@ -71,7 +70,7 @@ var storage = multer_1.default.diskStorage({
     },
     filename: function (req, file, cb) {
         var fileName = file.originalname.split(' ').join('-');
-        var extension = mime_1.default.extension(file);
+        var extension = FILE_TYPE_MAP[file.mimetype];
         cb(null, fileName + "-" + Date.now() + "." + extension);
     },
 });
@@ -237,6 +236,7 @@ var DeleteProducts = function (req, res) { return __awaiter(void 0, void 0, void
                             status: 'Invalid Id',
                         })];
                 }
+                console.log(req);
                 return [4 /*yield*/, products_1.default.findByIdAndRemove(req.params.id)];
             case 1:
                 _a.sent();

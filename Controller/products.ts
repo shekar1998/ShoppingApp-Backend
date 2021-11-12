@@ -21,8 +21,8 @@ const storage = multer.diskStorage({
   },
   filename: function (req: any, file: any, cb: any) {
     const fileName = file.originalname.split(' ').join('-');
-    const extension = mime.extension(file);
-    cb(null, `${fileName}-${Date.now()}.${extension}`);
+    const extension = FILE_TYPE_MAP[file.mimetype];
+    cb(null, `${fileName}-${Date.now()}.${extension}`)
   },
 });
 
@@ -32,7 +32,7 @@ export let uploadImageArray = upload.array('images', 10);
 
 export const GetProducts = async (req: any, res: any) => {
   try {
-    console.log('Entering Get Products')
+    console.log('Entering Get Products');
     let filter: any = {};
     if (req.query.categories) {
       filter = { category: req.query.categories.split(',') };
@@ -130,6 +130,8 @@ export const DeleteProducts = async (req: any, res: any) => {
         status: 'Invalid Id',
       });
     }
+    console.log(req);
+    
     await Product.findByIdAndRemove(req.params.id);
     res.status(200).json({
       status: 'Successful',

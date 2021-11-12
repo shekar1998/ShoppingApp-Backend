@@ -63,6 +63,7 @@ var getUSers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
+                console.log("Entering Users");
                 return [4 /*yield*/, user_1.default.find({})];
             case 1:
                 users = _a.sent();
