@@ -97,7 +97,7 @@ export const GetFeaturedProduct = async (req: any, res: any) => {
 
 export const CreateProducts = async (req: any, res: any) => {
   try {
-    console.log('Req => ', req.file.filename);
+    console.log('Req => ', req);
     if (!req.file.filename) {
       return res.status(500).json({
         status: 'No Image is Uploaded',

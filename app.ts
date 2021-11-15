@@ -14,12 +14,17 @@ const usersRoutes = require('./Routes/users');
 const ordersRoutes = require('./Routes/orders');
 
 const startServer = () => {
-  const app = express();
+  const app :any= express();
 
   const api = process.env.API_URL;
-
+  let Options:any ={    
+    origin : true,  
+    credentials: true,
+    exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+    optionsSuccessStatus : 200
+  }
+  app.use(cors(Options));
   app.use(express.json());
-  app.use(cors());
   app.use(ExpressJwt());
   app.use(ErrorHandler);
   app.use('/public/Image', express.static(__dirname + '/public/Image'));

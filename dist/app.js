@@ -18,8 +18,14 @@ var ordersRoutes = require('./Routes/orders');
 var startServer = function () {
     var app = express_1.default();
     var api = process.env.API_URL;
+    var Options = {
+        origin: true,
+        credentials: true,
+        exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+        optionsSuccessStatus: 200
+    };
+    app.use(cors_1.default(Options));
     app.use(express_1.default.json());
-    app.use(cors_1.default());
     app.use(jwt_1.ExpressJwt());
     app.use(errorHandler_1.ErrorHandler);
     app.use('/public/Image', express_1.default.static(__dirname + '/public/Image'));

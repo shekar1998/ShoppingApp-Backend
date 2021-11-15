@@ -192,7 +192,7 @@ var CreateProducts = function (req, res) { return __awaiter(void 0, void 0, void
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                console.log('Req => ', req.file.filename);
+                console.log('Req => ', req);
                 if (!req.file.filename) {
                     return [2 /*return*/, res.status(500).json({
                             status: 'No Image is Uploaded',
