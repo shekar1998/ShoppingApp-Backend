@@ -21,8 +21,12 @@ const storage = multer.diskStorage({
   },
   filename: function (req: any, file: any, cb: any) {
     const fileName = file.originalname.split(' ').join('-');
+    console.log('filename',fileName);
+    
     const extension = FILE_TYPE_MAP[file.mimetype];
-    cb(null, `${fileName}-${Date.now()}.${extension}`)
+    console.log('extension      ',`${Date.now()}-${fileName}`);
+
+    cb(null, `${Date.now()}-${fileName}`);
   },
 });
 
@@ -97,15 +101,26 @@ export const GetFeaturedProduct = async (req: any, res: any) => {
 
 export const CreateProducts = async (req: any, res: any) => {
   try {
-    console.log('Req => ', req);
+    console.log('Req => ', req.file);
     if (!req.file.filename) {
       return res.status(500).json({
         status: 'No Image is Uploaded',
       });
     }
+
+    const filesArray: any = req.files;
+    const pathArray = `${req.protocol}://${req.get('host')}/public/Image/`;
+    const ImagePathsArray: any = [];
+
+    if (filesArray) {
+      filesArray.map((filesArray: any) => {
+        ImagePathsArray.push(`${pathArray}${filesArray.filename}`);
+      });
+    }
+
     const name: any = req.file.filename;
     const path = `${req.protocol}://${req.get('host')}/public/Image/`;
-    const products: any = await Product.create({ ...req.body, image: `${path}${name}` });
+    const products: any = await Product.create({ ...req.body, image: `${path}${name}`, images: ImagePathsArray });
     if (!products) {
       return res.status(500).json({
         status: 'Products cannot be created',
@@ -131,7 +146,7 @@ export const DeleteProducts = async (req: any, res: any) => {
       });
     }
     console.log(req);
-    
+
     await Product.findByIdAndRemove(req.params.id);
     res.status(200).json({
       status: 'Successful',

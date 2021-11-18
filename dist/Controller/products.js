@@ -70,8 +70,10 @@ var storage = multer_1.default.diskStorage({
     },
     filename: function (req, file, cb) {
         var fileName = file.originalname.split(' ').join('-');
+        console.log('filename', fileName);
         var extension = FILE_TYPE_MAP[file.mimetype];
-        cb(null, fileName + "-" + Date.now() + "." + extension);
+        console.log('extension      ', Date.now() + "-" + fileName);
+        cb(null, Date.now() + "-" + fileName);
     },
 });
 var upload = multer_1.default({ storage: storage });
@@ -187,20 +189,28 @@ var GetFeaturedProduct = function (req, res) { return __awaiter(void 0, void 0, 
 }); };
 exports.GetFeaturedProduct = GetFeaturedProduct;
 var CreateProducts = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var name_1, path, products, err_5;
+    var filesArray, pathArray_1, ImagePathsArray_1, name_1, path, products, err_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                console.log('Req => ', req);
+                console.log('Req => ', req.file);
                 if (!req.file.filename) {
                     return [2 /*return*/, res.status(500).json({
                             status: 'No Image is Uploaded',
                         })];
                 }
+                filesArray = req.files;
+                pathArray_1 = req.protocol + "://" + req.get('host') + "/public/Image/";
+                ImagePathsArray_1 = [];
+                if (filesArray) {
+                    filesArray.map(function (filesArray) {
+                        ImagePathsArray_1.push("" + pathArray_1 + filesArray.filename);
+                    });
+                }
                 name_1 = req.file.filename;
                 path = req.protocol + "://" + req.get('host') + "/public/Image/";
-                return [4 /*yield*/, products_1.default.create(__assign(__assign({}, req.body), { image: "" + path + name_1 }))];
+                return [4 /*yield*/, products_1.default.create(__assign(__assign({}, req.body), { image: "" + path + name_1, images: ImagePathsArray_1 }))];
             case 1:
                 products = _a.sent();
                 if (!products) {
